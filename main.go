@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"gochat/api"
+	"gochat/handler"
 )
 
 func main() {
-	api.InitializeRoutes()
-
+	InitializeRoutes()
+	handler.InitDB()
 	fmt.Println("Server started on http://localhost:3030")
 	err := http.ListenAndServe(":3030", nil)
 	if err != nil {
