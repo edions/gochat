@@ -2,18 +2,25 @@ package main
 
 import (
 	"fmt"
+	"gochat/handler"
 	"net/http"
 
 	"github.com/google/uuid"
-    "gochat/handler"
 )
 
 func InitializeRoutes() {
     http.HandleFunc("GET /", HomePage)
     http.HandleFunc("GET /ws", HandleConnections)
     http.HandleFunc("GET /ws/", HandleChatHistory)
+    http.HandleFunc("POST /upload", handler.HandlerUpload)
+
+    fs := http.FileServer(http.Dir(uploadPath))
+    http.Handle("GET /uploads/", http.StripPrefix("/uploads/", fs))
+
     go handler.HandleMessages()
 }
+
+const uploadPath = "./uploads"
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Welcome to the Go Chat!")

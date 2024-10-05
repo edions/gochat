@@ -2,6 +2,7 @@ package models
 
 type Message struct {
 	ChatID string `json:"chatid"`
-	Username string `json:"username"`
+	UserID string `json:"userid"`
 	Message  string `json:"message"`
+	File string `json:"file"`
 }
